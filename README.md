@@ -59,3 +59,12 @@ Vector giving the point location at which each ARU was deployed.
 Matrix giving standardized values of background noise on ARU recordings. Rows represent ARUs and columns represent days of recordings during the deployment period. Background noise was used to assess variation in the calling/detection parameter (delta)
 ## maxdates
 The maximum number of days of recording across ARUs.
+ 
+
+<br />
+<br />
+
+# Analyzing_AR_NOBO_data.R
+Sample code for jointly estimating abundance of bobwhite coveys from point count and ARU data is provided in Analyzing_AR_NOBO_data.R. Abundance was modeled as varying by study area, with seperate observation processes for point counts and ARUs. The statistical model
+follows that of Doser et al. (2021). Integrating automated acoustic vocalization data and point count surveys for estimation of bird abundance, with a few exceptions. Point counts survey a larger area than ARUs based on a preliminary analysis; counts were performed right at ARU locations, so point counts surveyed the entire ARU area plus an additional area. We modeled abundance separatley for the area surveyed by ARUs and the expanded area between the ARU and point count detection radius using the same parameters but an offset for area. These two abundance estimates were summed to determine abundance within the point count sampling range. We also modified the false positive estimation process, using a Poisson process and the number of false positives per validated recording rather than a
+Hypergeometric distribution. Finally, we model variation in the parameter for the average number of calls detected/covey (delta) based on study area and background noise on recordings.
