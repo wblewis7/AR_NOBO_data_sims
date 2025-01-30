@@ -15,35 +15,28 @@ Formatted point count survey data giving the total number of bobwhite covey dete
 ## ydb.PC
 Formatted point count survey data giving the number of bobwhite covey detections in each detection bin per survey. The first dimension of the array corresponds to unique survey locations, the second dimension represents the 6 distance bins (0-100m, 100-200m, 200-300m,
 300-400m, 400-500m, 500-600m), and the third dimension represents repeat surveys at the same location.
-## nareaeffects
-The number of study area effects to estimate in the model. This number is the number of study areas minus 1, since the first site is treated as the intercept.
 ## nB
-The number of distance bands from the point count distance sampling.
+The number of distance bins from the point count distance sampling.
 ## db
-Break points of distance bands from the point count distance sampling.
+Break points of distance bins from the point count distance sampling.
 ## pix
-Relative area of each distance band from the point count distance sampling.
-## point.area.PC
+Relative area of each distance bin from the point count distance sampling.
+## areaPC
 Area (square meters) surveyed by each point count.
-## point.area.ARU
-Area (square meters) surveyed by ARU.
-## point.area.DIFF
+## areaARU
+Area (square meters) surveyed by ARUs.
+## areaDiff
 Additional area (square meters) surveyed by point counts but not by ARUs.
 ## npoints
 Number of unique survey locations
-## area
-Matrix giving the study area for each survey location. Rows represent unique survey locations. Columns represent study area effects estimated in the model. Values of 1 represent which study area effect to use for each survey location. Survey locations at the reference
-study area are denoted with all 0s.
+## site
+Vector giving the study site for each survey location.
+## nsites
+The number of study sites (8).
 ## nvisits
 The number of repeat point count visits performed at each survey location.
-## nareas
-The total number of survey areas (8)
-## nvalidate
-The number of ARU recordings manually validated for false positives.
-## FP
-The number of detections identified by the automated classifier per validated recording determined to be false positives through manual validation.
 ## n.ARU
-The number of ARUs used in the study
+The number of ARUs used in the study (26).
 ## n.A.times
 The number of recordings for each ARU which detected at least one covey call.
 ## A.times
@@ -57,17 +50,29 @@ Vector giving the point location at which each ARU was deployed.
 ## ARU.noise
 Matrix giving standardized values of background noise on ARU recordings. Rows represent ARUs and columns represent days of recordings during the deployment period. Background noise was used to assess variation in the calling/detection parameter (delta)
 ## maxdates
-The maximum number of days of recording across ARUs.
- 
+Maximum number of days of recording across ARUs.
+## n.ARU.val
+Number of recordings from which a subset of ARU detections were manually validated.
+## which.v.ARU
+Indexing vector giving the ARUs in y.ARU with at least one recording with a detected bobwhite call.
+## n.which.v.ARU
+Number of ARUs with at least one recording with a detected bobwhite call.
+## ARUID.val
+Indexing vector giving the ARU in v.ARU associated with each recording with manual validation.
+## ARUID.sub.val and ARU.Atimes.ID.val
+Indexing vectors giving the delta estimates associated with each recording with manual validation.
+## ARUday.val
+Indexing vector giving the day of recording in v.ARU associated with each recording with manual validation.
+## k.val
+Number of true positives within manually validated detections for recordings with validation.
+## n.val
+Total number of manually validated detections for recordings with validation.
 
 <br />
 <br />
 
 # Analyzing_AR_NOBO_data.R
-Sample code for jointly estimating abundance of bobwhite coveys from point count and ARU data is provided in Analyzing_AR_NOBO_data.R. Abundance was modeled as varying by study area, with seperate observation processes for point counts and ARUs. The statistical model
-follows that of Doser et al. (2021). Integrating automated acoustic vocalization data and point count surveys for estimation of bird abundance, with a few exceptions. Point counts survey a larger area than ARUs based on a preliminary analysis; counts were performed right at ARU locations, so point counts surveyed the entire ARU area plus an additional area. We modeled abundance separatley for the area surveyed by ARUs and the expanded area between the ARU and point count detection radius using the same parameters but an offset for area. These two abundance estimates were summed to determine abundance within the point count sampling range. We also modified the false positive estimation process, using a Poisson process and the number of false positives per validated recording rather than a
-Hypergeometric distribution. Finally, we model variation in the parameter for the average number of calls detected/covey (delta) based on study area and background noise on recordings.
- 
+Sample code for jointly estimating abundance of bobwhite coveys from fall distance-sampling point count and ARU data is provided in Analyzing_AR_NOBO_data.R. Point count and ARU data are integrated in a Bayesian hierarchical framework. Both datasets jointly estimate the state (abundance) process but have seperate observation processes. We use a modified version of the statistical model of Doser et al. 2021 (Integrating automated acoustic vocalization data and point count surveys for estimation of bird abundance), with modifications by Nolan et al. 2024 (Effects of management practices on Northern Bobwhite Colinus virginianus density in privately owned working forests across the Southeastern United States). Point counts are incorporated via a hierarchical distance-sampling model (Royle et al. 2004 Modeling abundance effects in distance sampling) with a Half-Normal detection function (Addressing temporal variability in bird calling with design and estimation: A Northern Bobwhite example), modified to account for repeat surveys. ARU data are incorporated via a zero-truncated hurdle model and account for false positives and negatives. We model abundance as varying by study site, while the ARU detection process varies by site and background noise of recordings. A subset of detections are manually validated and incorporated with a Hypergeometric formulation to correct for false positives.
 
 <br />
 <br />
