@@ -1,6 +1,7 @@
 # AR_NOBO_data_sims
-Data and code for simulations and empirical analyses of northern bobwhite point count and ARU data from Arkansas, USA. From Lewis, W. B., C. Johnson, and J. A. Martin. Integrating autonomous recording units and point-count surveys for population monitoring of northern bobwhites (Colinus virginianus): A test of the 
-statistical models of Doser et al. (2021).
+Data and code for simulations and empirical analyses of northern bobwhite point count and ARU data from Arkansas, USA. From Lewis, W. B., C. Johnson, and J. A. Martin. Assessing the efficacy and cost-effectiveness of integrating autonomous recording units and point-count surveys for population monitoring of northern bobwhite (Colinus virginianus).
+
+Contact Information: William Lewis, wblewis7@gmail.com, University of Georgia
 ---
 
 ---
